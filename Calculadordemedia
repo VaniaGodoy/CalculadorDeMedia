@@ -1,0 +1,183 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: TelaMedia(),
+    );
+  }
+}
+
+class TelaMedia extends StatefulWidget {
+  const TelaMedia({super.key});
+
+  @override
+  State<TelaMedia> createState() => _TelaMediaState();
+}
+
+class _TelaMediaState extends State<TelaMedia> {
+  final nomeController = TextEditingController();
+  final emailController = TextEditingController();
+  final nota1Controller = TextEditingController();
+  final nota2Controller = TextEditingController();
+  final nota3Controller = TextEditingController();
+
+  String nome = "";
+  String email = "";
+  String notas = "";
+  String media = "";
+
+  void calcularMedia() {
+    double n1 = double.tryParse(nota1Controller.text) ?? 0;
+    double n2 = double.tryParse(nota2Controller.text) ?? 0;
+    double n3 = double.tryParse(nota3Controller.text) ?? 0;
+
+    double m = (n1 + n2 + n3) / 3;
+
+    setState(() {
+      nome = nomeController.text;
+      email = emailController.text;
+      notas = "$n1 - $n2 - $n3";
+      media = m.toStringAsFixed(1);
+    });
+  }
+
+  void limparCampos() {
+    nomeController.clear();
+    emailController.clear();
+    nota1Controller.clear();
+    nota2Controller.clear();
+    nota3Controller.clear();
+
+    setState(() {
+      nome = "";
+      email = "";
+      notas = "- - -";
+      media = "";
+    });
+  }
+
+  InputDecoration campo(String hint) {
+    return InputDecoration(
+      hintText: hint,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(6),
+      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Tarefa Final DPM 2026.5"),
+        backgroundColor: Colors.blue,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+
+            const Text(
+              "CALCULADOR DE MÉDIA",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+
+            const SizedBox(height: 10),
+
+            TextField(
+              controller: nomeController,
+              decoration: campo("NOME"),
+            ),
+
+            const SizedBox(height: 8),
+
+            TextField(
+              controller: emailController,
+              decoration: campo("eMAIL"),
+            ),
+
+            const SizedBox(height: 8),
+
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: nota1Controller,
+                    decoration: campo("Nota 1"),
+                    keyboardType: TextInputType.number,
+                  ),
+                ),
+                const SizedBox(width: 5),
+                Expanded(
+                  child: TextField(
+                    controller: nota2Controller,
+                    decoration: campo("Nota 2"),
+                    keyboardType: TextInputType.number,
+                  ),
+                ),
+                const SizedBox(width: 5),
+                Expanded(
+                  child: TextField(
+                    controller: nota3Controller,
+                    decoration: campo("Nota 3"),
+                    keyboardType: TextInputType.number,
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 10),
+
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: calcularMedia,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                ),
+                child: const Text("CALCULA MÉDIA"),
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
+            const Text("Resultado:"),
+
+            const SizedBox(height: 5),
+
+            Text("Nome: $nome"),
+            Text("eMail: $email"),
+            Text("Notas: $notas"),
+            Text("Média: $media"),
+
+            const SizedBox(height: 10),
+
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: limparCampos,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                ),
+                child: const Text("APAGA OS CAMPOS"),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
