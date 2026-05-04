@@ -2,9 +2,9 @@
 
 Calculador de Média
 
-![Tela1](demo1.png)
+![Tela1](demo1.jpg)
 
-![Tela2](demo2.png)
+![Tela2](demo2.jpg)
 
 ## Descrição
 
